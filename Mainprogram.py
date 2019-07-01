@@ -46,13 +46,20 @@ epsilon_plastic_history = [epsilon_plastic]
 stress_history = []
 
 #Defining the elements:
-
 r = np.zeros((number_of_elements,2))
+
+meshrefinementfactor= 5  #ratio of element sizes at outer and inner radius
+#ratio between element sizes of subsequent elements for a geometric series
+q=meshrefinementfactor**(1./(number_of_elements-1));
+#size of first element
+lelem=(ro-ri)*(1-q)/(1-meshrefinementfactor*q)
+
 tr = r_in
 for i in range(number_of_elements):
     r[i,0] = tr
-    r[i,1] = tr+dr
+    r[i,1] = tr+lelem
     tr = r[i,1]
+    lelem=lelem*q
 
 # Material Routine:
 
