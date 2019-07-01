@@ -7,7 +7,7 @@ def elementroutine(r,lamda, mu,u_element, epsilon_plastic,sigmaY,youngs_modulus)
     N2 = (1+gauss_point)/2
     B = np.array([-1/(2*jacobian), 1/(2*jacobian), N1/(N1*r[0] + N2*r[1]), N2/(N1*r[0] + N2*r[1]), N1/(N1*r[0] + N2*r[1]), N2/(N1*r[0] + N2*r[1])]).reshape(3,2)
 	epsilon = np.dot(B, u_element)
-	stress_new , Material_Stiffness1, strain_plastic = materialroutine(epsilon, epsilon_plastic, lamda, mu,sigmaY,youngs_modulus)
+	stress_new , Material_Stiffness1, strain_plastic = material_routine(epsilon, epsilon_plastic, lamda, mu,sigmaY,youngs_modulus)
     #C = np.array([(2*mu + lamda), lamda, lamda,lamda,(2*mu + lamda), lamda, lamda,lamda,(2*mu + lamda)]).reshape(3,3)
     Kt_element = weight * ((B.transpose()).dot(Material_Stiffness1).dot(B)) * (N1*r[0] + N2*r[1])**2 * jacobian
 	F_int = weight* ((B.transpose()).dot(stress_new))* (N1*r[0] + N2*r[1])**2 * jacobian
